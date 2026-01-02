@@ -191,6 +191,7 @@
     thunar
     gparted
     #cowsay
+    openssh
   ];
 
   # Check the proper system state version
