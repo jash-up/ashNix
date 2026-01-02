@@ -38,3 +38,4 @@ I wont be using hyprland for a while now so I won't do it now.
 But later, probably in a few months I'll set up hyprland dot files as well as home manager.
 
 #got the thing on ashPC and currently cloned on sash
+#got it working on sash lesgooii
