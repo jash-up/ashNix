@@ -19,6 +19,30 @@
   # Enabling networking
   networking.networkmanager.enable = true;
 
+  # Setting up ssh
+  services.openssh.enable = true;
+
+  # Allowing port 22 for ssh
+  networking.firewall.allowedTCPPorts = [ 22 ];
+
+  # Preventing sleep on AC for lidswitch
+  #services.logind.lidSwitch = "ignore";
+  services.displayManager.autoLogin = {
+    enable = true;
+    user = "ash";
+  };
+
+  systemd.services."getty@tty1".enable = false;
+  systemd.services."autovt@tty1".enable = false;
+
+  systemd.sleep.extraConfig = ''
+    AllowSuspend=no
+    AllowHibernation=no
+    AllowHybridSleep=no
+    AllowSuspendThenHibernate=no
+  '';
+  
+
   # Allowing unfree packages
   nixpkgs.config.allowUnfree = true;
 
@@ -127,46 +151,46 @@
     #syncthing  # I probably dont need this cuz we enables it as a services up top, same thing with firefox ig
     obsidian
     git
-    gnome-boxes
+    #gnome-boxes
     tmux
     bat
     htop
-    kitty
-    alacritty
-    libreoffice-still
+    #kitty
+    #alacritty
+    #libreoffice-still
     vlc
-    calibre
-    discord
-    kdePackages.kdenlive
-    transmission_4-gtk
-    virt-manager
-    qemu
+    #calibre
+    #discord
+    #kdePackages.kdenlive
+    #transmission_4-gtk
+    #virt-manager
+    #qemu
     gnomeExtensions.caffeine
     gnome-tweaks
     protonvpn-gui
     nemo
     ranger
-    qutebrowser
-    telegram-desktop
+    #qutebrowser
+    #telegram-desktop
     fzf
-    eza
-    gimp2-with-plugins
-    handbrake
+    #eza
+    #gimp2-with-plugins
+    #handbrake
     tor
-    freecad
-    wireshark
-    nmap
-    aircrack-ng
-    metasploit
-    burpsuite
-    hashcat
+    #freecad
+    #wireshark
+    #nmap
+    #aircrack-ng
+    #metasploit
+    #burpsuite
+    #hashcat
     #john
     ffmpeg_7-full
     peaclock
-    inetutils
+    #inetutils
     thunar
     gparted
-    cowsay
+    #cowsay
   ];
 
   # Check the proper system state version
