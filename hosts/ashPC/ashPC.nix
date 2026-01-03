@@ -87,6 +87,20 @@
 	dataDir = "/home/ash/.config/syncthing";
   };
 
+  # Enabling NFS client
+  fileSystems."/mnt/ashShare" = {
+    device = "192.168.0.181:/srv/nfs/ashShare";
+    fsType = "nfs";
+    options = [
+      "nfsvers=4"
+      "rw"
+      "noatime"
+      "hard"
+      "intr"
+    ];
+  };
+
+
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
@@ -118,12 +132,15 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.ash = {
     isNormalUser = true;
+    uid = 1000;
     description = "Arnav Hiwarkar";
     extraGroups = [ "networkmanager" "wheel" "libvirt" "kvm" ];
     packages = with pkgs; [
     #  thunderbird
     ];
   };
+
+
 
   # Install firefox.
   programs.firefox.enable = true;
