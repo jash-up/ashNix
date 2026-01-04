@@ -39,3 +39,9 @@ But later, probably in a few months I'll set up hyprland dot files as well as ho
 
 #got the thing on ashPC and currently cloned on sash
 #got it working on sash lesgooii
+
+for mounting and using ashShare: use commands
+nix run ./#mount-ashShare
+nix run ./#umount-ashShare
+
+works like a nfs charm

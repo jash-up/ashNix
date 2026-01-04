@@ -103,6 +103,22 @@
   #  ];
   #};
 
+  # Making the nfs flake setting passwordless
+  security.sudo.extraRules = [
+    {
+      users = [ "ash" ];
+      commands = [
+        {
+          command = "/run/current-system/sw/bin/mount";
+          options = [ "NOPASSWD" ];
+        }
+        {
+          command = "/run/current-system/sw/bin/umount";
+          options = [ "NOPASSWD" ];
+        }
+      ];
+    }
+  ]; 
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -183,6 +199,7 @@
     thunar
     gparted
     inetutils
+    nfs-utils
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
