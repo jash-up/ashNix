@@ -87,18 +87,21 @@
 	dataDir = "/home/ash/.config/syncthing";
   };
 
-  # Enabling NFS client
-  fileSystems."/mnt/ashShare" = {
-    device = "192.168.0.181:/srv/nfs/ashShare";
-    fsType = "nfs";
-    options = [
-      "nfsvers=4"
-      "rw"
-      "noatime"
-      "hard"
-      "intr"
-    ];
-  };
+  # Enabling NFS client - this opens it on boot, id otn want that
+  #fileSystems."/mnt/ashShare" = {
+  #  device = "192.168.0.181:/srv/nfs/ashShare";
+  #  fsType = "nfs";
+  #  options = [
+  #    "nfsvers=4"
+  #    "rw"
+  #    #"x-systemd.automount" # this puts it after boot, still not very usefull
+  #    "nofail"
+  #    "_netdev"
+  #    "noatime"
+  #    "hard"
+  #    "intr"
+  #  ];
+  #};
 
 
   # Configure keymap in X11
