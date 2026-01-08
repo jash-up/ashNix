@@ -55,6 +55,10 @@
 
   };
 
+  # Trying jellyfin
+  services.jellyfin.enable = true;
+  services.jellyfin.openFirewall = true;
+
   virtualisation = {
     libvirtd = {
       enable = true;
@@ -201,6 +205,9 @@
     inetutils
     nfs-utils
     cava
+    jellyfin
+    jellyfin-web
+    jellyfin-ffmpeg
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
