@@ -205,9 +205,10 @@
     inetutils
     nfs-utils
     cava
-    jellyfin
-    jellyfin-web
-    jellyfin-ffmpeg
+    #jellyfin
+    #jellyfin-web
+    #jellyfin-ffmpeg
+    jellyfin-media-player
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
