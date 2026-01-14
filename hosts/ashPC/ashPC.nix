@@ -209,6 +209,7 @@
     #jellyfin-web
     #jellyfin-ffmpeg
     jellyfin-media-player
+    codeblocks
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
