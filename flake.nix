@@ -3,9 +3,16 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+
+    # Zen browser
+    zen-browser = {
+      url = "github:youwen5/zen-browser-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
-  outputs = inputs@{ self, nixpkgs }: let
+  outputs = inputs@{ self, nixpkgs, ... }: let
     system = "x86_64-linux";
     pkgs = import nixpkgs { inherit system; };
   in {
@@ -19,14 +26,14 @@
         ];
       };
 
-      sash = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = { inherit inputs; };
-        modules = [
-          ./hosts/sash/sash.nix
-          ./hosts/sash/hardware-configuration.nix
-        ];
-      };
+      #sash = nixpkgs.lib.nixosSystem {
+      #  system = "x86_64-linux";
+      #  specialArgs = { inherit inputs; };
+      #  modules = [
+      #    ./hosts/sash/sash.nix
+      #    ./hosts/sash/hardware-configuration.nix
+      #  ];
+      #};
     };
 
     apps.${system} = {
