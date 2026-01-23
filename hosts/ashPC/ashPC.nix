@@ -123,6 +123,7 @@
     pulse.enable = true;
     # If you want to use JACK applications, uncomment this
     #jack.enable = true;
+  };
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
@@ -189,3 +190,4 @@
   system.stateVersion = "25.11"; # Did you read the comment?
 
 }
+
