@@ -185,6 +185,7 @@
     jellyfin-media-player
     codeblocks
     inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
+    ytui-music
   ];
 
   system.stateVersion = "25.11"; # Did you read the comment?
