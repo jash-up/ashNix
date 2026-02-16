@@ -31,22 +31,26 @@
   time.timeZone = "Asia/Kolkata";
 
   # Select internationalisation properties.
-  i18n.defaultLocale = "en_IN";
-
   i18n.extraLocaleSettings = {
-    LC_ADDRESS = "en_IN";
-    LC_IDENTIFICATION = "en_IN";
-    LC_MEASUREMENT = "en_IN";
-    LC_MONETARY = "en_IN";
-    LC_NAME = "en_IN";
-    LC_NUMERIC = "en_IN";
-    LC_PAPER = "en_IN";
-    LC_TELEPHONE = "en_IN";
-    LC_TIME = "en_IN";
+    LC_TIME = "en_US.UTF-8";
+    LC_MONETARY = "en_US.UTF-8";
   };
 
-  # Enable the X11 windowing system.
+  # Enable the X11 windowing system. 
+  # This is REQUIRED for the "GNOME on Xorg" option to exist.
   services.xserver.enable = true;
+
+  # SDDM Configuration
+  services.displayManager.sddm = {
+    enable = true;
+    wayland.enable = true;
+  };
+
+  # Keep GNOME enabled
+  services.desktopManager.gnome.enable = true;
+
+  # REMOVE the services.displayManager.sessionPackages = [ pkgs.gnome-session ]; 
+  # line entirely. It's causing the build error.  
 
   virtualisation = {
     libvirtd = {
@@ -58,10 +62,6 @@
 
   #Enabling ssh-agent. --Keep it disabled on gnome cuz of gnome ssh agent lol
   #programs.ssh.startAgent = true;
-
-  # Enable the GNOME Desktop Environment.
-  services.displayManager.gdm.enable = true;
-  services.desktopManager.gnome.enable = true;
 
   #Enabling syncthing.
   services.syncthing = {
@@ -144,6 +144,9 @@
 
   # Enabling openssh
   services.openssh.enable = true;
+
+  # Enabling tailscale
+  services.tailscale.enable = true;
   
   environment.systemPackages = with pkgs; [
     neovim
@@ -186,6 +189,15 @@
     codeblocks
     inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
     ytui-music
+    android-tools
+    scrcpy
+    metasploit
+    nmap
+    pdfcpu
+    qpdf
+    xorg.libX11
+    xorg.libxkbfile
+    xkeyboard_config
   ];
 
   system.stateVersion = "25.11"; # Did you read the comment?
