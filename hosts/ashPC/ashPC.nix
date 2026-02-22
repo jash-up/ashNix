@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, inputs, lib, ... }:
 
 {
   imports = 
@@ -46,11 +46,19 @@
     wayland.enable = true;
   };
 
-  # Keep GNOME enabled
+  #Gnome
   services.desktopManager.gnome.enable = true;
 
-  # REMOVE the services.displayManager.sessionPackages = [ pkgs.gnome-session ]; 
-  # line entirely. It's causing the build error.  
+  #KDE plasma
+  services.desktopManager.plasma6.enable = true;
+
+  # some ssh auth thing between gnome and kde
+  programs.ssh.askPassword = lib.mkForce "${pkgs.kdePackages.ksshaskpass}/bin/ksshaskpass";
+
+  # KDE buffering stuff
+  environment.variables = {
+    KWIN_DRM_DISABLE_TRIPLE_BUFFERING = "1";
+  };
 
   virtualisation = {
     libvirtd = {
@@ -197,6 +205,7 @@
     qpdf
     xorg.libX11
     xorg.libxkbfile
+    obs-studio
     xkeyboard_config
   ];
 
