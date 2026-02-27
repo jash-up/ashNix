@@ -207,6 +207,8 @@
     xorg.libxkbfile
     obs-studio
     xkeyboard_config
+    telegram-desktop
+    pmbootstrap
   ];
 
   system.stateVersion = "25.11"; # Did you read the comment?
