@@ -59,7 +59,7 @@
   environment.variables = {
     KWIN_DRM_DISABLE_TRIPLE_BUFFERING = "1";
   };
-
+ 
   virtualisation = {
     libvirtd = {
       enable = true;
@@ -141,11 +141,18 @@
     isNormalUser = true;
     uid = 1000;
     description = "Arnav Hiwarkar";
-    extraGroups = [ "networkmanager" "wheel" "libvirt" "kvm" ];
+    extraGroups = [ "networkmanager" "wheel" "libvirt" "kvm" "adbusers" ];
     packages = with pkgs; [
       thunderbird
     ];
   };
+
+  #scrcpy fake wevcam
+  boot.extraModulePackages = [ config.boot.kernelPackages.v4l2loopback ];
+  boot.kernelModules = [ "v4l2loopback" ];
+  boot.extraModprobeConfig = ''
+    options v4l2loopback devices=1 video_nr=10 card_label="AndroidMirror" exclusive_caps=1
+  '';
 
   # Install firefox.
   programs.firefox.enable = true;
@@ -209,6 +216,9 @@
     xkeyboard_config
     telegram-desktop
     pmbootstrap
+    scrcpy
+    android-tools
+    cheese
   ];
 
   system.stateVersion = "25.11"; # Did you read the comment?
