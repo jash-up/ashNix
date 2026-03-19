@@ -4,6 +4,11 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
 
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Zen browser
     zen-browser = {
       url = "github:youwen5/zen-browser-flake";
@@ -12,7 +17,7 @@
 
   };
 
-  outputs = inputs@{ self, nixpkgs, ... }: let
+  outputs = inputs@{ self, nixpkgs, home-manager, ... }: let
     system = "x86_64-linux";
     pkgs = import nixpkgs { inherit system; };
   in {
@@ -23,6 +28,14 @@
         modules = [
           ./hosts/ashPC/ashPC.nix
           ./hosts/ashPC/hardware-configuration.nix
+
+	  home-manager.nixosModules.home-manager
+	  {
+	    home-manager.useGlobalPkgs = true;
+	    home-manager.useUserPackages = true;
+	    home-manager.extraSpecialArgs = { inherit inputs; };
+	    home-manager.users.ash = import ./hosts/ashPC/home.nix;
+	  }
         ];
       };
 
