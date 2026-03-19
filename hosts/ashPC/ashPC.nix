@@ -13,6 +13,10 @@
   # Hostname
   networking.hostName = "ashPC";
 
+  # Enabling some ports
+  networking.firewall.allowedTCPPorts = [ 8000 7000 7001 7100 ];
+  networking.firewall.allowedUDPPorts = [ 6000 6001 7011 ];
+
   # Setting up flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
@@ -73,7 +77,7 @@
 
   #Enabling syncthing.
   services.syncthing = {
-	enable = true;
+	enable = false;
 	user = "ash";
 	group = "users";
 	dataDir = "/home/ash/.config/syncthing";
@@ -146,14 +150,6 @@
       thunderbird
     ];
   };
-
-  #scrcpy fake wevcam
-  boot.extraModulePackages = [ config.boot.kernelPackages.v4l2loopback ];
-  boot.kernelModules = [ "v4l2loopback" ];
-  boot.extraModprobeConfig = ''
-    options v4l2loopback devices=1 video_nr=10 card_label="AndroidMirror" exclusive_caps=1
-  '';
-
   # Install firefox.
   programs.firefox.enable = true;
 
@@ -162,6 +158,41 @@
 
   # Enabling tailscale
   services.tailscale.enable = true;
+
+  # smb server
+  services.samba = {
+    enable = true;
+    openFirewall = true;
+    settings = {
+      global = {
+        "workgroup" = "WORKGROUP";
+	"server string" = "NixOS Server";
+	"security" = "user";
+
+
+      };
+
+      "PDF's" = {
+        "path" = "/home/ash/Study_server";
+	"browseable" = "yes";
+	"read only" = "no";
+	"guest ok" = "no";
+	"valid users" = "ash";
+	"create mask" = "0644";
+	"directory mask" = "0755";
+      };
+    };
+  };
+
+  ## enablingn avahi for ipad
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    publish = {
+      enable = true;
+      userServices = true;
+    };
+  };
   
   environment.systemPackages = with pkgs; [
     neovim
@@ -219,6 +250,8 @@
     scrcpy
     android-tools
     cheese
+    uxplay
+    audacity
   ];
 
   system.stateVersion = "25.11"; # Did you read the comment?
