@@ -42,27 +42,49 @@
 
   # Enable the X11 windowing system. 
   # This is REQUIRED for the "GNOME on Xorg" option to exist.
-  services.xserver.enable = true;
+  #services.xserver.enable = true;
 
   # SDDM Configuration
-  services.displayManager.sddm = {
-    enable = true;
-    wayland.enable = true;
-  };
+  #services.displayManager.sddm = {
+  #  enable = true;
+  #  wayland.enable = true;
+  #};
 
   #Gnome
-  services.desktopManager.gnome.enable = true;
+  #services.desktopManager.gnome.enable = true;
 
   #KDE plasma
-  services.desktopManager.plasma6.enable = true;
+  #services.desktopManager.plasma6.enable = true;
 
   # some ssh auth thing between gnome and kde
-  programs.ssh.askPassword = lib.mkForce "${pkgs.kdePackages.ksshaskpass}/bin/ksshaskpass";
+  #programs.ssh.askPassword = lib.mkForce "${pkgs.kdePackages.ksshaskpass}/bin/ksshaskpass";
 
   # KDE buffering stuff
-  environment.variables = {
-    KWIN_DRM_DISABLE_TRIPLE_BUFFERING = "1";
+  #environment.variables = {
+  #  KWIN_DRM_DISABLE_TRIPLE_BUFFERING = "1";
+  #};
+
+  ## for sway
+
+  #hardware graphics
+  hardware.graphics.enable = true;
+
+  #sway enabling
+  programs.sway = {
+    enable = true;
+    wrapperFeatures.gtk = true;
+
+    extraPackages = with pkgs; [
+      swaybg
+      wl-clipboard
+      fuzzel
+      foot
+      i3status
+      light
+    ];
   };
+
+  security.polkit.enable = true;
  
   virtualisation = {
     libvirtd = {
