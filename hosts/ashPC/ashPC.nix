@@ -70,19 +70,19 @@
   hardware.graphics.enable = true;
 
   #sway enabling
-  programs.sway = {
-    enable = true;
-    wrapperFeatures.gtk = true;
+  #programs.sway = {
+  #  enable = true;
+  #  wrapperFeatures.gtk = true;
 
-    extraPackages = with pkgs; [
-      swaybg
-      wl-clipboard
-      fuzzel
-      foot
-      i3status
-      brightnessctl
-    ];
-  };
+  #  extraPackages = with pkgs; [
+  #    swaybg
+  #    wl-clipboard
+  #    fuzzel
+  #    foot
+  #    i3status
+  #    brightnessctl
+  #  ];
+  #};
 
   security.polkit.enable = true;
 
@@ -100,6 +100,31 @@
 
   ## for niri
   programs.niri.enable = true;
+
+  #programs.waybar.enable = true;
+
+  #portal setup for wayland compositors
+  xdg.portal = {
+    enable = true;
+    extraPortals = [
+      pkgs.xdg-desktop-portal-gnome
+      pkgs.xdg-desktop-portal-gtk
+    ];
+    config.common.default = [ "gtk" ];
+    config.niri.default = [ "gnome" "gtk" ];
+  };
+
+  #gnome keyring
+  services.gnome.gnome-keyring.enable = true;
+
+  #PAM
+  security.pam.services.sddm.enableGnomeKeyring = true;
+
+  #power-profiles
+  services.power-profiles-daemon.enable = true;
+  
+  #thermald
+  #services.thermald.enable = true;
 
 
   #Enabling ssh-agent. --Keep it disabled on gnome cuz of gnome ssh agent lol
@@ -223,6 +248,13 @@
       userServices = true;
     };
   };
+
+  ##system hfonts for nerdconfgd
+  fonts.packages = with pkgs; [
+    nerd-fonts.fira-code
+    nerd-fonts.jetbrains-mono
+    nerd-fonts.symbols-only
+  ];
   
   environment.systemPackages = with pkgs; [
     neovim
@@ -286,6 +318,8 @@
     kdePackages.dolphin
     nerdfetch
     prismlauncher
+    psmisc
+    powerline-fonts
   ];
 
   system.stateVersion = "25.11"; # Did you read the comment?

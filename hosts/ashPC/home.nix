@@ -8,46 +8,57 @@
   ## for niri
   xdg.configFile."niri/config.kdl".source = ./niri.kdl;
 
-  wayland.windowManager.sway = {
+  #for fonts
+  fonts.fontconfig.enable = true;
+
+  #cursor theme
+  home.pointerCursor = {
+    name = "Adwaita";
+    package = pkgs.adwaita-icon-theme;
+    size = 24;
+    x11.enable = true;
+    gtk.enable = true;
+  };
+
+  #fuzzel
+  programs.fuzzel = {
     enable = true;
-    config = rec {
-      # Set your modifier key (Mod4 is the 'Super/Windows' key)
-      modifier = "Mod4";
-      
-      # Use foot as a lightweight, fast Wayland terminal
-      terminal = "${pkgs.foot}/bin/foot"; 
-      
-      # Basic startup commands
-      startup = [
-        { command = "${pkgs.mako}/bin/mako"; } # Notification daemon
-        { command = "${pkgs.waybar}/bin/waybar"; } # Status bar
-      ];
-
-      # Simple keybindings to get you started
-      keybindings = lib.mkOptionDefault {
-        "${modifier}+Return" = "exec ${terminal}";
-        "${modifier}+d" = "exec ${pkgs.bemenu}/bin/bemenu-run";
-        "${modifier}+q" = "kill";
-        "${modifier}+Shift+e" = "exec swaynag -t warning -m 'Exit Sway?' -b 'Yes' 'swaymsg exit'";
+    settings = {
+      main = {
+        font = "JetBrainsMono Nerd Font:size=12";
+	terminal = "${pkgs.foot}/bin/foot";
+        prompt = "λ  ";
+        layer = "overlay";
       };
-
-      # Configure your output (Resolution/Refresh Rate)
-      # 'output "*" bg #282828 solid_color' sets a simple background
-      bars = [ { command = "${pkgs.waybar}/bin/waybar"; } ];
+      colors = {
+        background = "1e1e2eff"; # Catppuccin Mocha-ish colors
+        text = "cdd6f4ff";
+        match = "f38ba8ff";
+        selection = "585b70ff";
+        selection-text = "cdd6f4ff";
+        border = "b4befeff";
+      };
+      border = {
+        width = 2;
+        radius = 10;
+      };
     };
   };
 
+
+  programs.waybar.enable = true;
+    
   # Essential packages for a working Wayland environment
   home.packages = with pkgs; [
-    foot       # Terminal
-    bemenu     # Launcher
+
     mako       # Notifications
-    waybar     # Status bar
     swaylock   # Screen locker
     swayidle   # Idle daemon
     wl-clipboard # Copy/paste utilities
+    libnotify
+    brightnessctl
+    xwayland-satellite
+    power-profiles-daemon
+    pavucontrol
   ];
-
-
-
 }
