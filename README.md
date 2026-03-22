@@ -48,3 +48,5 @@ works like a nfs charm
 
 need to make niri riced
 and need to get sddm better, current one is trash
+
+yooo although the waybar config is in ./config/waybar and separate
