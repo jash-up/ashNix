@@ -58,6 +58,12 @@ binds {
     Mod+T { spawn "alacritty"; }
     Mod+W { spawn "zen"; }
 
+    // Toggle Maximize (Fills the workspace, bar stays visible)
+    Mod+F { maximize-column; }
+
+    // Toggle Fullscreen (True fullscreen, covers the bar)
+    Mod+Shift+F { fullscreen-window; }
+
     // Navigation
     Mod+H     { focus-column-left; }
     Mod+J     { focus-window-down; }
@@ -90,6 +96,8 @@ binds {
     // scrilling
     Mod+WheelScrollDown      cooldown-ms=150 { focus-workspace-down; }
     Mod+WheelScrollUp        cooldown-ms=150 { focus-workspace-up; }
+
+    Mod+MouseMiddle  { close-window; }
 
     // Media Keys
     XF86AudioRaiseVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+"; }
