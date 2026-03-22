@@ -69,6 +69,7 @@
   #hardware graphics
   hardware.graphics.enable = true;
 
+
   #sway enabling
   #programs.sway = {
   #  enable = true;
@@ -200,7 +201,7 @@
     isNormalUser = true;
     uid = 1000;
     description = "Arnav Hiwarkar";
-    extraGroups = [ "networkmanager" "wheel" "libvirt" "kvm" "adbusers" ];
+    extraGroups = [ "networkmanager" "wheel" "libvirt" "kvm" "adbusers" "video" ];
     packages = with pkgs; [
       thunderbird
     ];
@@ -320,7 +321,14 @@
     prismlauncher
     psmisc
     powerline-fonts
+    feh 
+    brightnessctl
   ];
+
+  #udev packages to enable brightnessctl
+  #services.udev.packages = with pkgs; [
+  #  brightnessctl
+  #];
 
   system.stateVersion = "25.11"; # Did you read the comment?
 

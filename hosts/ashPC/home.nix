@@ -56,10 +56,11 @@
     swayidle 
     wl-clipboard 
     libnotify
-    brightnessctl
     xwayland-satellite
     power-profiles-daemon
     pavucontrol
     swaybg
+    nomacs
+    nautilus
   ];
 }

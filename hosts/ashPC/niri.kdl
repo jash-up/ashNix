@@ -10,7 +10,7 @@ spawn-at-startup "waybar"
 spawn-at-startup "mako"
 
 //wallpaper by swaybg
-spawn-sh-at-startup "swaybg -i ~/Pictures/wallpapers/nasa_jp.png -m fill"
+spawn-sh-at-startup "swaybg -i ~/Pictures/Wallpapers/nasa_eng.webp -m fill"
 
 // --- INPUT ---
 input {
@@ -55,8 +55,9 @@ binds {
     Mod+Q { close-window; }
     Mod+Shift+E { quit; }
 
-    Mod+T { spawn "alacritty"; }
-    Mod+W { spawn "zen"; }
+    Mod+W { spawn "alacritty"; }
+    Mod+Z { spawn "zen"; }
+    Mod+E { spawn "dolphin"; }
 
     // Toggle Maximize (Fills the workspace, bar stays visible)
     Mod+F { maximize-column; }
@@ -103,4 +104,9 @@ binds {
     XF86AudioRaiseVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+"; }
     XF86AudioLowerVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"; }
     XF86AudioMute        allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
+
+    //brightness controlaa
+    
+    XF86MonBrightnessUp   allow-when-locked=true { spawn-sh "~/ashNix/hosts/ashPC/scripts/brightnessctlScript.sh --inc"; }
+    XF86MonBrightnessDown allow-when-locked=true { spawn-sh "~/ashNix/hosts/ashPC/scripts/brightnessctlScript.sh --dec"; }
 }
