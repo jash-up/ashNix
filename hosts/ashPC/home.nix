@@ -51,14 +51,15 @@
   # Essential packages for a working Wayland environment
   home.packages = with pkgs; [
 
-    mako       # Notifications
-    swaylock   # Screen locker
-    swayidle   # Idle daemon
-    wl-clipboard # Copy/paste utilities
+    mako     
+    swaylock 
+    swayidle 
+    wl-clipboard 
     libnotify
     brightnessctl
     xwayland-satellite
     power-profiles-daemon
     pavucontrol
+    swaybg
   ];
 }

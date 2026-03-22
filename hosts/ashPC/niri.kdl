@@ -9,6 +9,8 @@ spawn-at-startup "xwayland-satellite"
 spawn-at-startup "waybar"
 spawn-at-startup "mako"
 
+//wallpaper by swaybg
+spawn-sh-at-startup "swaybg -i ~/Pictures/wallpapers/nasa_jp.png -m fill"
 
 // --- INPUT ---
 input {
@@ -52,6 +54,9 @@ binds {
     Mod+D { spawn "fuzzel"; }
     Mod+Q { close-window; }
     Mod+Shift+E { quit; }
+
+    Mod+T { spawn "alacritty"; }
+    Mod+W { spawn "zen"; }
 
     // Navigation
     Mod+H     { focus-column-left; }
