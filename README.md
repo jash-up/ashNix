@@ -45,3 +45,6 @@ nix run ./#mount-ashShare
 nix run ./#umount-ashShare
 
 works like a nfs charm
+
+need to make niri riced
+and need to get sddm better, current one is trash

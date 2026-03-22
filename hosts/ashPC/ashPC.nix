@@ -45,10 +45,10 @@
   #services.xserver.enable = true;
 
   # SDDM Configuration
-  #services.displayManager.sddm = {
-  #  enable = true;
-  #  wayland.enable = true;
-  #};
+  services.displayManager.sddm = {
+    enable = true;
+    wayland.enable = true;
+  };
 
   #Gnome
   #services.desktopManager.gnome.enable = true;
@@ -80,11 +80,15 @@
       fuzzel
       foot
       i3status
-      light
+      brightnessctl
     ];
   };
 
   security.polkit.enable = true;
+
+  ## for hyprland
+  #programs.hyprland.enable = true;
+
  
   virtualisation = {
     libvirtd = {
@@ -93,6 +97,10 @@
       #tcpListen = false;
     };
   };
+
+  ## for niri
+  programs.niri.enable = true;
+
 
   #Enabling ssh-agent. --Keep it disabled on gnome cuz of gnome ssh agent lol
   #programs.ssh.startAgent = true;
@@ -275,6 +283,9 @@
     uxplay
     audacity
     kdePackages.okular
+    kdePackages.dolphin
+    nerdfetch
+    prismlauncher
   ];
 
   system.stateVersion = "25.11"; # Did you read the comment?
