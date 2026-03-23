@@ -50,3 +50,5 @@ need to make niri riced
 and need to get sddm better, current one is trash
 
 yooo although the waybar config is in ./config/waybar and separate
+
+brightnessctl works now, but you gotta load niri with niri-session not exec niri-session

@@ -326,9 +326,12 @@
   ];
 
   #udev packages to enable brightnessctl
-  #services.udev.packages = with pkgs; [
-  #  brightnessctl
-  #];
+  #services.udev.extraRules = ''
+  #  ACTION=="add", SUBSYSTEM=="backlight", RUN+="${pkgs.coreutils}/bin/chgrp video /sys/class/backlight/%k/brightness"
+  #  ACTION=="add", SUBSYSTEM=="backlight", RUN+="${pkgs.coreutils}/bin/chmod g+w /sys/class/backlight/%k/brightness"
+  #'';
+
+  hardware.acpilight.enable = true;
 
   system.stateVersion = "25.11"; # Did you read the comment?
 

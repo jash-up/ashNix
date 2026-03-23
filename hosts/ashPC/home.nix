@@ -50,7 +50,6 @@
     
   # Essential packages for a working Wayland environment
   home.packages = with pkgs; [
-
     mako     
     swaylock 
     swayidle 
@@ -62,5 +61,6 @@
     swaybg
     nomacs
     nautilus
+    #brightnessctl
   ];
 }
