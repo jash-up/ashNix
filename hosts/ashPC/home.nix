@@ -45,6 +45,18 @@
     };
   };
 
+  #default apps
+  xdg.mimeApps = {
+    enable = true;
+    defaultApplications = {
+      "text/html" = "zen.desktop";
+      "x-scheme-handler/http" = "zen.desktop";
+      "x-scheme-handler/https" = "zen.desktop";
+      "application/pdf" = "org.kde.okular.desktop";
+      "image/png" = "feh.desktop";
+      "text/plain" = "nvim.desktop";
+    };
+  };
 
   programs.waybar.enable = true;
     

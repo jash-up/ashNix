@@ -120,6 +120,7 @@
 
   #PAM
   security.pam.services.sddm.enableGnomeKeyring = true;
+  security.pam.services.swaylock = {};
 
   #power-profiles
   services.power-profiles-daemon.enable = true;

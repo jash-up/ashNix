@@ -10,7 +10,7 @@ spawn-at-startup "waybar"
 spawn-at-startup "mako"
 
 //wallpaper by swaybg
-spawn-sh-at-startup "swaybg -i ~/Pictures/Wallpapers/nasa_eng.webp -m fill"
+spawn-sh-at-startup "swaybg -i ~/Pictures/Wallpapers/nasa1.png -m fill"
 
 // --- INPUT ---
 input {
