@@ -10,7 +10,7 @@ spawn-at-startup "waybar"
 spawn-at-startup "mako"
 
 //wallpaper by swaybg
-spawn-sh-at-startup "swaybg -i ~/Pictures/Wallpapers/nasa1.png -m fill"
+spawn-sh-at-startup "swaybg -i ./sources/nasa1.png -m fill"
 
 // --- Outups---
 output "eDP-1" {
@@ -105,6 +105,10 @@ binds {
     Mod+WheelScrollUp        cooldown-ms=150 { focus-workspace-up; }
 
     Mod+MouseMiddle  { close-window; }
+
+    //swaylock
+    Mod+Shift+L { spawn "swaylock"; }
+
 
     // Media Keys
     XF86AudioRaiseVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+"; }

@@ -59,11 +59,69 @@
   };
 
   programs.waybar.enable = true;
+
+  #swaylock
+  programs.swaylock = {
+    enable = true;
+    # Use swaylock-effects for blur, clock, and fade features
+    package = pkgs.swaylock-effects; 
+    
+    settings = {
+      # --- General ---
+      image = builtins.toString /home/ash/ashNix/hosts/ashPC/sources/nasa1.png;
+      scaling = "fill";
+      color = "1e1e2e";             # Background color if no image/blur is used
+      font = "JetBrains Mono Nerd Font"; # Make sure you have this installed!
+      show-failed-attempts = true;
+      indicator-caps-lock = true;
+      
+      # --- Effects (swaylock-effects only) ---
+      clock = true;
+      timestr = "%I:%M %p";
+      datestr = "%A, %B %d";
+      effect-blur = "7x5";          # Blurs the screen underneath
+      fade-in = 0.2;                # Smooth fade in transition
+      
+      # --- Indicator Circle Dimensions ---
+      indicator-radius = 120;
+      indicator-thickness = 15;
+      
+      # --- Colors ---
+      # Transparent inside
+      inside-color = "00000000";
+      inside-clear-color = "00000000";
+      inside-caps-lock-color = "00000000";
+      inside-ver-color = "00000000";
+      inside-wrong-color = "00000000";
+
+      # Ring colors (Catppuccin Mocha inspired)
+      ring-color = "b4befe";        # Lavender default ring
+      ring-clear-color = "f5e0dc";  # Rosewater when clearing
+      ring-caps-lock-color = "fab387"; # Peach for caps lock
+      ring-ver-color = "89b4fa";    # Blue when verifying
+      ring-wrong-color = "f38ba8";  # Red on wrong password
+
+      # Text colors
+      text-color = "cdd6f4";
+      text-clear-color = "f5e0dc";
+      text-caps-lock-color = "fab387";
+      text-ver-color = "89b4fa";
+      text-wrong-color = "f38ba8";
+
+      # Remove the ugly lines between ring and inside
+      line-color = "00000000";
+      line-clear-color = "00000000";
+      line-caps-lock-color = "00000000";
+      line-ver-color = "00000000";
+      line-wrong-color = "00000000";
+      separator-color = "00000000";
+    };
+  };
     
   # Essential packages for a working Wayland environment
   home.packages = with pkgs; [
     mako     
-    swaylock 
+    #swaylock 
     swayidle 
     wl-clipboard 
     libnotify
