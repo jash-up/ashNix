@@ -12,6 +12,12 @@ spawn-at-startup "mako"
 //wallpaper by swaybg
 spawn-sh-at-startup "swaybg -i ~/Pictures/Wallpapers/nasa1.png -m fill"
 
+// --- Outups---
+output "eDP-1" {
+	mode "1920x1080@48.010"
+	scale 1.0
+}
+
 // --- INPUT ---
 input {
     keyboard {
