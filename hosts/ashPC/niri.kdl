@@ -10,7 +10,7 @@ spawn-at-startup "waybar"
 spawn-at-startup "mako"
 
 //wallpaper by swaybg
-spawn-sh-at-startup "swaybg -i ./sources/nasa1.png -m fill"
+spawn-sh-at-startup "swaybg -i ~/ashNix/hosts/ashPC/sources/nasa1.png -m fill"
 
 // --- Outups---
 output "eDP-1" {

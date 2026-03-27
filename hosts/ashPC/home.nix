@@ -132,5 +132,7 @@
     nomacs
     nautilus
     #brightnessctl
+    anki-bin
+    #checkra1n
   ];
 }

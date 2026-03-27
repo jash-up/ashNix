@@ -257,6 +257,9 @@
     nerd-fonts.jetbrains-mono
     nerd-fonts.symbols-only
   ];
+
+  #ios multiplexing
+  services.usbmuxd.enable = true;
   
   environment.systemPackages = with pkgs; [
     neovim
@@ -324,6 +327,8 @@
     powerline-fonts
     feh 
     brightnessctl
+    checkra1n
+    libimobiledevice
   ];
 
   #udev packages to enable brightnessctl
