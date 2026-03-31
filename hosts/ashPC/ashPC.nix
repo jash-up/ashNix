@@ -123,7 +123,10 @@
   };
 
   #gnome keyring
-  services.gnome.gnome-keyring.enable = true;
+  services.gnome.gnome-keyring.enable = false;
+
+  services.dbus.enable = true;
+
 
   #PAM
   security.pam.services.sddm.enableGnomeKeyring = true;
@@ -267,6 +270,19 @@
 
   #ios multiplexing
   services.usbmuxd.enable = true;
+
+  systemd.user.services.dbus.environment = {
+    DBUS_SESSION_BUS_ADDRESS = "unix:path=%t/bus";
+  };
+
+  systemd.user.services.keepassxc = {
+    description = "KeePassXC passwod manager";
+    wantedBy = [ "default.target" ];
+    serviceConfig = {
+      ExecStart = "${pkgs.keepassxc}/bin/keepassxc";
+      Restart = "always";
+    };
+  };
   
   environment.systemPackages = with pkgs; [
     neovim
@@ -338,6 +354,8 @@
     libimobiledevice
     networkmanagerapplet
     google-chrome
+    github-copilot-cli
+    libsecret
   ];
 
   #udev packages to enable brightnessctl
