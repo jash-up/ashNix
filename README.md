@@ -57,3 +57,5 @@ If you wanna connect to tailscale(its already enabled), used:
 tailscale up
 tailscale down 
 (requires sudo)
+
+lmaooooo copilot failed to optimize and i had to fallback to previous commit 
