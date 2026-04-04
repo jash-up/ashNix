@@ -134,5 +134,6 @@
     #brightnessctl
     anki-bin
     #checkra1n
+    protontricks
   ];
 }

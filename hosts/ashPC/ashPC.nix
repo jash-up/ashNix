@@ -31,6 +31,9 @@
     "gradle-7.6.6"
   ];
 
+  services.udisks2.enable = true;
+  services.gvfs.enable = true;
+
   # Setting timezone
   time.timeZone = "Asia/Kolkata";
 
@@ -69,11 +72,29 @@
   #hardware graphics
   hardware.graphics = {
     enable = true;
+    enable32Bit = true;
     extraPackages = with pkgs; [
       intel-media-driver
       libva-vdpau-driver
       libvdpau-va-gl
     ];
+  };
+
+  # enabling steam
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true;
+    dedicatedServer.openFirewall = true;
+    #extraArgs = "-no-cef-sandbox";
+    #extraPackages = with pkgs; [
+    #  intel-media-driver
+    #  vaapiIntel
+    #];
+  };
+
+  environment.sessionVariables = {
+    STEAM_EXTRA_COMPAT_TOOLS_PATHS = "/home/ash/.steam/root/compatibilitytools.d";
+    WEBKIT_DISABLE_COMPOSITING_MODE = "1";
   };
 
 
@@ -114,13 +135,19 @@
   #portal setup for wayland compositors
   xdg.portal = {
     enable = true;
-    extraPortals = [
-      pkgs.xdg-desktop-portal-gnome
-      pkgs.xdg-desktop-portal-gtk
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-gtk
     ];
-    config.common.default = [ "gtk" ];
-    config.niri.default = [ "gnome" "gtk" ];
-  };
+    config = {
+      niri = {
+        default = lib.mkForce [ "gtk" ];
+        "org.freedesktop.impl.portal.FileChooser" = lib.mkForce [ "gtk" ];
+      };
+      common = {
+        default = lib.mkForce [ "gtk" ];
+      };
+    };
+  }; 
 
   #gnome keyring
   services.gnome.gnome-keyring.enable = false;
@@ -283,6 +310,11 @@
       Restart = "always";
     };
   };
+
+  nix.settings.max-jobs = "auto";
+  nix.settings.cores = 0;
+
+  programs.nix-ld.enable = true;
   
   environment.systemPackages = with pkgs; [
     neovim
@@ -356,7 +388,19 @@
     google-chrome
     github-copilot-cli
     libsecret
+    grim
+    slurp
+    swappy
+    wl-clipboard
+    freetype
+    dotnetCorePackages.sdk_8_0
+    protontricks
+    xfce.thunar-volman
   ];
+
+  environment.sessionVariables = {
+    DOTNET_ROOT = "${pkgs.dotnetCorePackages.sdk_8_0}";
+  };
 
   #udev packages to enable brightnessctl
   #services.udev.extraRules = ''

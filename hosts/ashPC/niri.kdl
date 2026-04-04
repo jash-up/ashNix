@@ -119,4 +119,7 @@ binds {
     
     XF86MonBrightnessUp   allow-when-locked=true { spawn-sh "~/ashNix/hosts/ashPC/scripts/brightnessctlScript.sh --inc"; }
     XF86MonBrightnessDown allow-when-locked=true { spawn-sh "~/ashNix/hosts/ashPC/scripts/brightnessctlScript.sh --dec"; }
+
+    Mod+Shift+S { spawn "sh" "-c" "grim -g \"$(slurp)\" - | swappy -f -"; }
+    Mod+S { spawn "sh" "-c" "grim -g \"$(slurp)\" - | wl-copy"; }
 }
