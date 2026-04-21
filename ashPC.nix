@@ -5,8 +5,8 @@
     [
       ./hardware-configuration.nix
     ];
-  
-  # Bootloader
+
+    # Bootloader
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
@@ -14,7 +14,7 @@
   networking.hostName = "ashPC";
 
   # Enabling some ports
-  networking.firewall.allowedTCPPorts = [ 8000 7000 7001 7100 ];
+  networking.firewall.allowedTCPPorts = [ 8000 7000 7001 7100 8384 ];
   networking.firewall.allowedUDPPorts = [ 6000 6001 7011 ];
 
   # Setting up flakes
@@ -39,35 +39,60 @@
 
   # Select internationalisation properties.
   i18n.extraLocaleSettings = {
-    LC_TIME = "en_US.UTF-8";
-    LC_MONETARY = "en_US.UTF-8";
+    LC_ADDRESS = "en_IN";
+    LC_IDENTIFICATION = "en_IN";
+    LC_MEASUREMENT = "en_IN";
+    LC_MONETARY = "en_IN";
+    LC_NAME = "en_IN";
+    LC_NUMERIC = "en_IN";
+    LC_PAPER = "en_IN";
+    LC_TELEPHONE = "en_IN";
+    LC_TIME = "en_IN";  
   };
 
-  # Enable the X11 windowing system. 
-  # This is REQUIRED for the "GNOME on Xorg" option to exist.
-  #services.xserver.enable = true;
+  # Use latest kernel.
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  # SDDM Configuration
-  services.displayManager.sddm = {
-    enable = false;
-    wayland.enable = true;
+  # Configure network proxy if necessary
+  # networking.proxy.default = "http://user:password@proxy:port/";
+  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+
+  # Enable the X11 windowing system.
+  # You can disable this if you're only using the Wayland session.
+  services.xserver.enable = true;
+
+  # Enable the KDE Plasma Desktop Environment.
+  services.displayManager.sddm.enable = true;
+  services.desktopManager.plasma6.enable = true;
+
+  # Configure keymap in X11
+  services.xserver.xkb = {
+    layout = "us";
+    variant = "";
   };
 
-  #Gnome
-  #services.desktopManager.gnome.enable = true;
 
-  #KDE plasma
-  #services.desktopManager.plasma6.enable = true;
+  # Enable CUPS to print documents.
+  services.printing.enable = true;
 
-  # some ssh auth thing between gnome and kde
-  #programs.ssh.askPassword = lib.mkForce "${pkgs.kdePackages.ksshaskpass}/bin/ksshaskpass";
+  # Enable sound with pipewire.
+  services.pulseaudio.enable = false;
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    # If you want to use JACK applications, uncomment this
+    #jack.enable = true;
 
-  # KDE buffering stuff
-  #environment.variables = {
-  #  KWIN_DRM_DISABLE_TRIPLE_BUFFERING = "1";
-  #};
+    # use the example session manager (no others are packaged yet so this is enabled by default,
+    # no need to redefine it in your config for now)
+    #media-session.enable = true;
+  };
 
-  ## for sway
+  # Enable touchpad support (enabled default in most desktopManager).
+  # services.xserver.libinput.enable = true;
 
   #hardware graphics
   hardware.graphics = {
@@ -97,28 +122,8 @@
     WEBKIT_DISABLE_COMPOSITING_MODE = "1";
   };
 
-
-  #sway enabling
-  #programs.sway = {
-  #  enable = true;
-  #  wrapperFeatures.gtk = true;
-
-  #  extraPackages = with pkgs; [
-  #    swaybg
-  #    wl-clipboard
-  #    fuzzel
-  #    foot
-  #    i3status
-  #    brightnessctl
-  #  ];
-  #};
-
   security.polkit.enable = true;
 
-  ## for hyprland
-  #programs.hyprland.enable = true;
-
- 
   virtualisation = {
     libvirtd = {
       enable = true;
@@ -128,36 +133,34 @@
   };
 
   ## for niri
-  programs.niri.enable = true;
-
-  #programs.waybar.enable = true;
+  #programs.niri.enable = true;
 
   #portal setup for wayland compositors
-  xdg.portal = {
-    enable = true;
-    extraPortals = with pkgs; [
-      xdg-desktop-portal-gtk
-    ];
-    config = {
-      niri = {
-        default = lib.mkForce [ "gtk" ];
-        "org.freedesktop.impl.portal.FileChooser" = lib.mkForce [ "gtk" ];
-      };
-      common = {
-        default = lib.mkForce [ "gtk" ];
-      };
-    };
-  }; 
+  #xdg.portal = {
+  #  enable = true;
+  #  extraPortals = with pkgs; [
+  #    xdg-desktop-portal-gtk
+  #  ];
+  #  config = {
+  #    niri = {
+  #      default = lib.mkForce [ "gtk" ];
+  #      "org.freedesktop.impl.portal.FileChooser" = lib.mkForce [ "gtk" ];
+  #    };
+  #    common = {
+  #      default = lib.mkForce [ "gtk" ];
+  #    };
+  #  };
+  #}; 
+ 
 
   #gnome keyring
   services.gnome.gnome-keyring.enable = false;
 
   services.dbus.enable = true;
 
-
   #PAM
-  security.pam.services.sddm.enableGnomeKeyring = true;
-  security.pam.services.swaylock = {};
+  #security.pam.services.sddm.enableGnomeKeyring = true;
+  #security.pam.services.swaylock = {};
 
   #power-profiles
   services.power-profiles-daemon.enable = true;
@@ -171,11 +174,13 @@
 
   #Enabling syncthing.
   services.syncthing = {
-	enable = false;
-	user = "ash";
-	group = "users";
-	dataDir = "/home/ash/.config/syncthing";
+    enable = true;
+    openDefaultPorts = true;
+    user = "ash";
+    dataDir = "/home/ash/.config/syncthing"; # Store config in your home
+    configDir = "/home/ash/.config/syncthing";
   };
+
 
   # Enabling NFS client - this opens it on boot, id otn want that
   #fileSystems."/mnt/ashShare" = {
@@ -208,31 +213,7 @@
         }
       ];
     }
-  ]; 
-
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
-  };
-
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
-
-  # Enable sound with pipewire.
-  services.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
-  };
-
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
+  ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.ash = {
@@ -295,122 +276,66 @@
     nerd-fonts.symbols-only
   ];
 
-  #ios multiplexing
-  services.usbmuxd.enable = true;
-
-  systemd.user.services.dbus.environment = {
-    DBUS_SESSION_BUS_ADDRESS = "unix:path=%t/bus";
-  };
-
-  systemd.user.services.keepassxc = {
-    description = "KeePassXC passwod manager";
-    wantedBy = [ "default.target" ];
-    serviceConfig = {
-      ExecStart = "${pkgs.keepassxc}/bin/keepassxc";
-      Restart = "always";
-    };
-  };
+  #systemd.user.services.keepassxc = {
+  #  description = "KeePassXC passwod manager";
+  #  wantedBy = [ "default.target" ];
+  #  serviceConfig = {
+  #    ExecStart = "${pkgs.keepassxc}/bin/keepassxc";
+  #    Restart = "always";
+  #  };
+  #};
 
   nix.settings.max-jobs = "auto";
   nix.settings.cores = 0;
 
   programs.nix-ld.enable = true;
-  
+
   environment.systemPackages = with pkgs; [
     neovim
     wget
     fastfetch
-    keepassxc
-    syncthing
+    proton-vpn
     obsidian
-    git
+    discord
     cmatrix
     tmux
-    kitty
     vlc
     transmission_4-gtk
-    virt-manager
-    gnomeExtensions.caffeine
-    gnome-tweaks
     nemo
     ranger
     peaclock
-    thunar
     gparted
     bat
     htop
-    alacritty
     libreoffice-still
     calibre
-    discord
-    protonvpn-gui
-    peaclock
-    thunar
-    gparted
-    inetutils
-    nfs-utils
     cava
-    #jellyfin
-    #jellyfin-web
-    #jellyfin-ffmpeg
-    jellyfin-media-player
-    codeblocks
-    inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
-    ytui-music
-    android-tools
-    scrcpy
-    metasploit
-    nmap
-    pdfcpu
     qpdf
-    xorg.libX11
-    xorg.libxkbfile
     obs-studio
-    xkeyboard_config
     telegram-desktop
-    pmbootstrap
-    scrcpy
-    android-tools
-    cheese
-    uxplay
     audacity
-    kdePackages.okular
-    kdePackages.dolphin
-    nerdfetch
-    prismlauncher
-    psmisc
-    powerline-fonts
-    feh 
-    brightnessctl
-    checkra1n
-    libimobiledevice
-    networkmanagerapplet
+    feh
     google-chrome
     github-copilot-cli
+    anki-bin
+    android-tools
+    zathura
+    uxplay
+    virt-manager
+    inetutils
+    nfs-utils
+    kdePackages.okular
+    prismlauncher
+    brightnessctl
     libsecret
-    grim
-    slurp
-    swappy
-    wl-clipboard
-    freetype
-    dotnetCorePackages.sdk_8_0
-    protontricks
-    xfce.thunar-volman
+    keepassxc
+    gnome-boxes
+    ladybird
+    inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
-
-  environment.sessionVariables = {
-    DOTNET_ROOT = "${pkgs.dotnetCorePackages.sdk_8_0}";
-  };
-
-  #udev packages to enable brightnessctl
-  #services.udev.extraRules = ''
-  #  ACTION=="add", SUBSYSTEM=="backlight", RUN+="${pkgs.coreutils}/bin/chgrp video /sys/class/backlight/%k/brightness"
-  #  ACTION=="add", SUBSYSTEM=="backlight", RUN+="${pkgs.coreutils}/bin/chmod g+w /sys/class/backlight/%k/brightness"
-  #'';
 
   hardware.acpilight.enable = true;
 
   system.stateVersion = "25.11"; # Did you read the comment?
 
 }
-
