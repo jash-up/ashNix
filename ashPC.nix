@@ -17,6 +17,19 @@
   networking.firewall.allowedTCPPorts = [ 8000 7000 7001 7100 8384 ];
   networking.firewall.allowedUDPPorts = [ 6000 6001 7011 ];
 
+  boot.extraModulePackages = with config.boot.kernelPackages; [ v4l2loopback ];
+  boot.kernelModules = [ "v4l2loopback" ];
+
+  programs.obs-studio = {
+    enable = true;
+    plugins = with pkgs.obs-studio-plugins; [
+      droidcam-obs
+      obs-vaapi # For hardware-accelerated encoding (highly recommended)
+    ];
+  };
+
+
+
   # Setting up flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
@@ -71,6 +84,10 @@
     variant = "";
   };
 
+  #flatpak
+  services.flatpak.enable = true;
+  xdg.portal.enable = true;
+  xdg.portal.extraPortals = [ pkgs.kdePackages.xdg-desktop-portal-kde ];
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -102,8 +119,13 @@
       intel-media-driver
       libva-vdpau-driver
       libvdpau-va-gl
+      intel-compute-runtime-legacy1
+      intel-vaapi-driver
+      vpl-gpu-rt
     ];
   };
+
+  environment.sessionVariables = { LIBVA_DRIVER_NAME = "iHD"; };
 
   # enabling steam
   programs.steam = {
@@ -311,7 +333,7 @@
     calibre
     cava
     qpdf
-    obs-studio
+    #obs-studio
     telegram-desktop
     audacity
     feh
@@ -332,6 +354,17 @@
     gnome-boxes
     ladybird
     inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
+    alacritty
+    brave
+    brave-search-cli 
+    #python312
+    #python312Packages.pip
+    android-tools
+    metasploit
+    scrcpy
+    nmap
+    #texliveFull
+
   ];
 
   hardware.acpilight.enable = true;

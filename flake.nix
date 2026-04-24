@@ -11,11 +11,13 @@
 
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
 
+    
+
     # Uncomment when ready to use Niri
     # niri.url = "github:sodiboo/niri-flake";
   };
 
-  outputs = { self, nixpkgs, home-manager, zen-browser, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, zen-browser, blender-bin, ... }@inputs:
     let
       system = "x86_64-linux";
     in {
