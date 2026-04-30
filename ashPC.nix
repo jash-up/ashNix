@@ -20,6 +20,11 @@
   boot.extraModulePackages = with config.boot.kernelPackages; [ v4l2loopback ];
   boot.kernelModules = [ "v4l2loopback" ];
 
+  boot.extraModprobeConfig = ''
+    options v4l2loopback devices=1 video_nr=10 card_label="OBS Virtual Camera" exclusive_caps=1
+  '';
+
+
   programs.obs-studio = {
     enable = true;
     plugins = with pkgs.obs-studio-plugins; [
@@ -28,7 +33,9 @@
     ];
   };
 
-
+  # Enable v4l2loopback module
+  #boot.extraModulePackages = with config.boot.kernelPackages; [ v4l2loopback ];
+  #boot.kernelModules = [ "v4l2loopback" ];
 
   # Setting up flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -364,7 +371,10 @@
     scrcpy
     nmap
     #texliveFull
-
+    kdiskmark
+    handbrake
+    droidcam
+    v4l-utils
   ];
 
   hardware.acpilight.enable = true;
