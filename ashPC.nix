@@ -142,7 +142,10 @@
     ];
   };
 
-  environment.sessionVariables = { LIBVA_DRIVER_NAME = "iHD"; };
+  environment.sessionVariables = { 
+    LIBVA_DRIVER_NAME = "iHD";
+    KWIN_FORCE_SW_CURSOR = "1";
+  };
 
   # enabling steam
   programs.steam = {
